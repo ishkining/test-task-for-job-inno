@@ -1,0 +1,4 @@
+DEBUG=True
+SECRET_KEY=django-insecure-=@q^66-8z@!8vzo3=oo$#8qfda9-@xt^=ep+gir=cksu@d!(-6
+STRIPE_PUBLIC_KEY=pk_test_51MbOlVLmCRPqRXEIv6rl20w9fGxbJ9zRhza2C0aJxFzm1k0JJEGcmxzEvb3FhTspzIrpwdF1sUHOCJMWvA4eC4ZX00CjggTVLK
+STRIPE_PRIVATE_KEY=sk_test_51MbOlVLmCRPqRXEIiGHV5pVMRkZoQbq4BEO6wM4bHWM0daqD6vNYlw1s5CbIMaNzhHUiZ96AsomQI7l9q8AQJ0Tu001AfwvvSr

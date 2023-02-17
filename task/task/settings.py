@@ -1,20 +1,24 @@
 from pathlib import Path
+from environs import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = Env()
+env.read_env(path=BASE_DIR / '.gitignore')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'test-task-ishkining.fly.dev']
+CSRF_TRUSTED_ORIGINS = ['https://test-task-ishkining.fly.dev']
 
 # Application definition
 
@@ -27,6 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'store',  # Django app
+
+    'whitenoise.runserver_nostatic',  # whitenoise
 ]
 
 MIDDLEWARE = [
@@ -37,6 +43,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',   #whitenoise
 ]
 
 ROOT_URLCONF = 'task.urls'
@@ -66,10 +74,7 @@ WSGI_APPLICATION = 'task.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.dj_db_url('DATABASE_URL', default='sqlite:///db.sqlite3'),
 }
 
 
@@ -107,11 +112,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # whitenoise
+
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / "staticfiles"  # new
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_PUBLIC_KEY = env.str('STRIPE_PUBLIC_KEY')
+STRIPE_PRIVATE_KEY = env.str('STRIPE_PRIVATE_KEY')
 
 
