@@ -1,0 +1,32 @@
+{% include "store/base.html" %}
+
+
+
+{% block content %}
+    <section class="container">
+        <h3>Информация о товаре:</h3>
+        <div class="row col-lg-6">
+            <div class="col">
+                <h1>Название: {{ item.name|capfirst }}</h1>
+                <p>Описание: {{ item.description }}</p>
+                <p>Цена: {{ item.get_price }}</p>
+                <a class="btn btn-info navbar-btn text-white w-100 p-2" type="button" href="{% url 'buy-one-item' item.id None %}">
+                    <i class="fa fa-cc-stripe" aria-hidden="true"></i>
+                    &nbsp;Положить в корзину
+                </a>
+
+                <br>
+                <hr>
+                <h3>Использовать скидки: </h3>
+                    {% for code in codes %}
+                        <a href="{%  url 'buy-one-item' item.id code.0 %}">
+                            <h4>{{ code.0 }} - <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                            &nbsp;{{ code.1 }}%</h4></a>
+                    {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+

@@ -1,0 +1,36 @@
+{% include "store/base.html" %}
+
+
+
+{% block content %}
+    <section class="container">
+        <div class="row col-lg-6">
+        <div class="col">
+        <h3>Все товары:</h3>
+        {% for item in items %}
+          <div>
+            <h5><a href="{% url 'show-one-item' item.id %}">
+                <i class="fa fa-link" aria-hidden="true"></i>&nbsp;
+                {{ item.name }} - {{ item.currency }} - ID#{{ item.id }}
+            </a></h5>
+          </div>
+        {% endfor %}
+        <br>
+        <hr>
+        <h3>Корзина: </h3>
+        {% for item in cart %}
+          <h4>{{ item.name }} - <i class="fa fa-cart-plus" aria-hidden="true"></i>
+              &nbsp;{{ item.quantity }} - {{ item.currency | upper }}</h4>
+        {% endfor %}
+        <a class="btn btn-danger navbar-btn text-white w-100 p-2" type="button" href="{% url 'clear-cart' %}">
+            <i class="fa fa-backward" aria-hidden="true"></i>
+            &nbsp;&nbsp;Очистить корзину
+        </a>
+
+        </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+

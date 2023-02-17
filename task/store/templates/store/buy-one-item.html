@@ -1,0 +1,47 @@
+{% include "store/base.html" %}
+
+
+
+{% block content %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <section class="container">
+        <div class="row col-lg-6">
+            <div class="col">
+                <h3>Корзина: </h3>
+                {% for item in cart %}
+                  <h4>{{ item.name }} - <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                      &nbsp;{{ item.quantity }}</h4>
+                {% endfor %}
+                <button class="btn btn-info text-white w-100" type="submit" id="stripe-checkout">
+                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                    Заплатить с помощью Stripe
+                </button>
+                <br>
+                <br>
+                <a class="btn btn-info navbar-btn text-white w-100 p-2" type="button" href="{% url 'show-all-items'%}">
+                    <i class="fa fa-cc-stripe" aria-hidden="true"></i>
+                    &nbsp;Посмотреть еще товары
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        let stripe_public_pk = Stripe('{{ stripe_public_key }}')
+
+        const pay_button = document.querySelector('#stripe-checkout')
+
+        pay_button.addEventListener('click', event => {
+            stripe_public_pk.redirectToCheckout({
+                sessionId: '{{ session_id }}'
+            })
+            .then(result => {
+
+            });
+        })
+
+    </script>
+{% endblock %}
+
+
